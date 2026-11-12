@@ -353,7 +353,7 @@ export const en: Messages = {
       },
       {
         title: 'Cookies and analytics',
-        body: 'We do not use tracking cookies or analytics tools. If that changes, we will ask for your consent first, with an option to decline.',
+        body: 'We do not use tracking cookies. To know how many people use the site, we count visits anonymously with Vercel Web Analytics: it uses no cookies, does not identify you and only records general data such as the page visited, country, device type and where the visit came from. Nothing from your prescription is part of this count.',
       },
       {
         title: 'Your rights',

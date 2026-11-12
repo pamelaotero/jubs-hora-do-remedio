@@ -355,7 +355,7 @@ export const pt = {
       },
       {
         title: 'Cookies e estatísticas',
-        body: 'Não usamos cookies de rastreamento nem ferramentas de estatística. Se isso mudar, vamos pedir seu consentimento antes, com opção de recusar.',
+        body: 'Não usamos cookies de rastreamento. Para saber quantas pessoas usam o site, contamos visitas de forma anônima com o Vercel Web Analytics: ele não usa cookies, não identifica quem você é e registra apenas dados gerais, como página visitada, país, tipo de aparelho e de onde veio o acesso. Nada da sua receita entra nessa contagem.',
       },
       {
         title: 'Seus direitos',
