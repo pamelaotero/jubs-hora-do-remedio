@@ -1,0 +1,136 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: clamp(20px, 2.2vw, 24px);
+  font-weight: 600;
+}
+
+.title svg {
+  width: 26px;
+  height: 26px;
+}
+
+.tag {
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-soft);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.daysSelect select {
+  appearance: none;
+  min-height: 42px;
+  padding: 0 40px 0 18px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%231c1c1c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E")
+    no-repeat right 14px center;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.scroller {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-inline: -4px;
+  padding-inline: 4px;
+}
+
+.days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(110px, 1fr));
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px 14px;
+  border-right: 1px solid var(--color-line);
+  scroll-snap-align: start;
+  font-variant-numeric: tabular-nums;
+}
+
+.day:nth-child(7n) {
+  border-right: 0;
+}
+
+.day:nth-child(n + 8) {
+  border-top: 1px solid var(--color-line);
+  padding-top: 14px;
+}
+
+.weekday {
+  font-weight: 600;
+}
+
+.date {
+  font-size: 14px;
+  color: var(--color-muted);
+  margin-bottom: 10px;
+}
+
+.slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slots li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slots svg {
+  width: 16px;
+  height: 16px;
+}
+
+.none {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.cta {
+  align-self: flex-end;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .cta {
+    align-self: stretch;
+  }
+}

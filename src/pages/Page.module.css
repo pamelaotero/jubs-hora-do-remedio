@@ -1,0 +1,37 @@
+/* Estilos compartilhados entre páginas. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+/* Página inicial: mais respiro entre as seções. */
+.landing {
+  gap: clamp(40px, 6vw, 72px);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.narrow {
+  max-width: 880px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.spread {
+  justify-content: space-between;
+}
+
+@media (max-width: 560px) {
+  .actions > * {
+    flex: 1 1 auto;
+  }
+}

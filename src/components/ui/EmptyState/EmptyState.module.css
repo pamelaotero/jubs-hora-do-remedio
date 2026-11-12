@@ -1,0 +1,18 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  padding-block: clamp(32px, 6vw, 56px);
+}
+
+.title {
+  font-size: 22px;
+}
+
+.description {
+  max-width: 46ch;
+  color: var(--color-muted);
+  margin-bottom: 8px;
+}

@@ -1,0 +1,110 @@
+.dropzone {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 26px 20px 22px;
+  border: 2px dashed var(--color-ink);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+  /* Chamada de atenção ao abrir a página: algumas pulsações suaves e para. */
+  animation: attention 1.8s ease-in-out 0.6s 3;
+}
+
+/* Anel que se expande ao redor do botão, junto com a pulsação. */
+.dropzone::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid var(--color-ink);
+  opacity: 0;
+  pointer-events: none;
+  animation: ring 1.8s ease-out 0.6s 3;
+}
+
+.dropzone:hover,
+.dragging {
+  background: var(--color-soft);
+  border-style: solid;
+  transform: translateY(-2px);
+  animation: none;
+}
+
+.dropzone:hover::after,
+.dragging::after {
+  animation: none;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-inverse);
+  margin-bottom: 4px;
+  animation: nudge 1.8s ease-in-out 0.6s 3;
+}
+
+.icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.title {
+  font-size: clamp(17px, 2vw, 19px);
+  font-weight: 700;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+@keyframes attention {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.015);
+  }
+}
+
+@keyframes ring {
+  0% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.04, 1.12);
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+  55% {
+    transform: translateY(0);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+}

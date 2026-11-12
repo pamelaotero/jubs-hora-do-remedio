@@ -1,0 +1,16 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 70ch;
+}
+
+.title {
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 700;
+}
+
+.lead {
+  color: var(--color-muted);
+  font-size: clamp(16px, 1.6vw, 18px);
+}

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jubs — protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Layout: uma coluna central (máx. 760px), passos 1-2-3 no topo, tabela rola na horizontal no celular */
+:root{
+  --paper:#f6f7f4; --surface:#ffffff; --ink:#1d2a33; --muted:#5d6b73; --line:#d9dfdc;
+  --accent:#2f6f5e; --accent-ink:#ffffff; --accent-soft:#e3efe9; --dose:#f2b84b; --gray:#e7e9e8;
+  --warn-bg:#fff4dc; --warn-ink:#7a5200; --danger:#b3261e;
+  --display:"Nunito", "Trebuchet MS", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121816; --surface:#1a2220; --ink:#e8eeeb; --muted:#9fb0a9; --line:#2e3a36;
+    --accent:#6cc3a6; --accent-ink:#0d1a16; --accent-soft:#1f322c; --dose:#f2b84b; --gray:#26302d;
+    --warn-bg:#3a2f14; --warn-ink:#f5d38a; --danger:#ff8a80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121816; --surface:#1a2220; --ink:#e8eeeb; --muted:#9fb0a9; --line:#2e3a36;
+  --accent:#6cc3a6; --accent-ink:#0d1a16; --accent-soft:#1f322c; --dose:#f2b84b; --gray:#26302d;
+  --warn-bg:#3a2f14; --warn-ink:#f5d38a; --danger:#ff8a80; color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:17px/1.5 var(--body)}
+a{color:var(--accent)}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,6vw,40px);font-weight:900}
+h2{font-size:24px;font-weight:800}
+h3{font-size:18px;font-weight:800}
+p{margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font-family:var(--display);font-weight:900;font-size:24px}
+.brand svg{width:34px;height:34px}
+nav.links{display:flex;gap:16px;font-size:15px}
+nav.links a{text-decoration:none;color:var(--muted)}
+nav.links a:hover{color:var(--ink)}
+.proto{background:var(--warn-bg);color:var(--warn-ink);font-size:14px;padding:8px 0}
+.steps{display:flex;gap:8px;margin:20px 0 8px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.step b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--gray);color:var(--ink);font-size:13px}
+.step.on{color:var(--ink);border-color:var(--accent)}
+.step.on b{background:var(--accent);color:var(--accent-ink)}
+.step.done b{background:var(--accent-soft);color:var(--accent)}
+main{padding-bottom:64px}
+section.view{display:none;flex-direction:column;gap:20px;padding-top:16px}
+section.view.on{display:flex}
+.lead{color:var(--muted);max-width:60ch}
+.drop{border:2px dashed var(--accent);border-radius:16px;background:var(--surface);padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;cursor:pointer}
+.drop.over{background:var(--accent-soft)}
+.drop small{color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{font:700 16px var(--body);border-radius:12px;padding:12px 18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:48px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--danger);border-color:var(--danger);background:transparent}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.drop:focus-visible,td button:focus-visible{outline:3px solid var(--dose);outline-offset:2px}
+.privacy{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.pill{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.pill svg{flex:none;width:22px;height:22px;color:var(--accent)}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:12px 14px;font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.grid{grid-template-columns:1fr}}
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:700}
+input,select,textarea{font:16px var(--body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px;width:100%}
+textarea{min-height:60px;resize:vertical}
+.check{flex-direction:row;align-items:flex-start;gap:10px;font-weight:400;font-size:15px}
+.check input{width:22px;height:22px;min-height:0;flex:none;margin-top:2px;accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{font:700 15px var(--body);padding:10px 16px;border:0;background:var(--surface);color:var(--muted);cursor:pointer;min-height:44px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.link-btn{background:none;border:0;color:var(--danger);font:700 14px var(--body);cursor:pointer;padding:6px}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table.sched{border-collapse:collapse;width:100%;min-width:640px;font-size:14px;font-variant-numeric:tabular-nums}
+.sched th,.sched td{border:1px solid var(--line);padding:6px;text-align:center}
+.sched thead th{background:var(--accent-soft);font-weight:700}
+.sched td.t{font-weight:700;white-space:nowrap}
+.sched td.m{text-align:left}
+.sched td.m b{display:block}
+.sched td.m span{color:var(--muted);font-size:13px}
+.sched td.off{background:var(--gray)}
+.sched tr.sep td{border-top:2px solid var(--ink)}
+.sched td button{width:30px;height:30px;border:2px solid var(--ink);border-radius:4px;background:var(--surface);cursor:pointer;font:700 12px var(--body);color:var(--accent);padding:0}
+.sched td button.given{width:auto;padding:0 6px;border-color:var(--accent);background:var(--accent-soft)}
+.week-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.notes{font-size:15px;display:flex;flex-direction:column;gap:4px}
+.notes p::before{content:"• ";color:var(--accent)}
+.legal h3{margin-top:8px}
+.legal p,.legal li{color:var(--ink);max-width:65ch}
+.legal ul{margin:0;padding-left:20px}
+dialog{border:0;border-radius:16px;padding:0;max-width:520px;width:calc(100% - 32px);background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(10,20,16,.55)}
+.dlg{padding:20px;display:flex;flex-direction:column;gap:14px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:12px;font-size:15px;max-width:calc(100% - 32px);display:none;z-index:10}
+.toast.on{display:block}
+.loading{display:flex;flex-direction:column;align-items:center;gap:12px;padding:40px 0;text-align:center}
+.bar{width:220px;height:8px;border-radius:99px;background:var(--gray);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width 1.2s ease}
+@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Jubs, início">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="14" fill="var(--accent-soft)"/><ellipse cx="9" cy="21" rx="5" ry="9" fill="var(--accent)"/><ellipse cx="31" cy="21" rx="5" ry="9" fill="var(--accent)"/><circle cx="16" cy="20" r="2" fill="var(--ink)"/><circle cx="24" cy="20" r="2" fill="var(--ink)"/><ellipse cx="20" cy="26" rx="3" ry="2.2" fill="var(--ink)"/><path d="M15 9 q5-5 10 0" stroke="var(--dose)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+      Jubs
+    </a>
+    <nav class="links"><a href="#inicio">Início</a><a href="#privacidade">Privacidade</a></nav>
+  </div>
+</header>
+<div class="proto"><div class="wrap">Protótipo para validar o fluxo. A leitura automática da receita está simulada com um exemplo.</div></div>
+
+<main class="wrap">
+  <div class="steps" id="steps" aria-label="Etapas">
+    <span class="step" data-s="1"><b>1</b>Enviar receita</span>
+    <span class="step" data-s="2"><b>2</b>Conferir</span>
+    <span class="step" data-s="3"><b>3</b>Tabela e lembretes</span>
+  </div>
+
+  <!-- 1. INÍCIO -->
+  <section class="view" id="v-inicio">
+    <h1>Sua receita vira uma tabela de horários.</h1>
+    <p class="lead">Envie a receita do médico ou do veterinário. A gente organiza cada dose por dia e horário, com um quadradinho para você marcar com caneta.</p>
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Enviar receita em PDF ou foto">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" style="color:var(--accent)"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6M9 15l3-3 3 3"/></svg>
+      <strong>Toque para enviar a receita</strong>
+      <small>PDF ou foto (JPG, PNG) de receita digitada</small>
+      <input type="file" id="file" accept=".pdf,image/png,image/jpeg" hidden>
+    </div>
+    <div class="row">
+      <button class="btn" id="btn-manual">Preencher à mão</button>
+      <button class="btn ghost" id="btn-exemplo">Ver com uma receita de exemplo</button>
+    </div>
+    <div class="privacy">
+      <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg><span><b>A receita não sai do seu aparelho.</b> A leitura acontece no seu navegador.</span></div>
+      <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg><span><b>Nada fica salvo.</b> Ao fechar a página, tudo é apagado.</span></div>
+      <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/><path d="M3 3l18 18"/></svg><span><b>Sem cadastro.</b> Não pedimos nome, e-mail nem CPF.</span></div>
+    </div>
+    <p class="note">O Jubs só organiza os horários. Ele não substitui o médico ou o veterinário. Confira sempre com a receita original.</p>
+  </section>
+
+  <!-- 1b. LENDO -->
+  <section class="view" id="v-lendo">
+    <div class="loading">
+      <h2>Lendo sua receita…</h2>
+      <div class="bar"><i id="bar"></i></div>
+      <p class="lead" id="lendo-msg">Procurando nomes de remédios, doses e horários.</p>
+    </div>
+  </section>
+
+  <!-- 2. CONFERIR -->
+  <section class="view" id="v-revisar">
+    <h2>Confira antes de gerar a tabela</h2>
+    <p class="note" id="rev-aviso">Encontramos estes remédios. Confira cada campo com a receita e corrija o que for preciso.</p>
+    <div class="card">
+      <div class="grid">
+        <label for="paciente">Para quem é (opcional)<input id="paciente" placeholder="Ex.: Jujuba"></label>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:14px;font-weight:700">Tipo de receita</span>
+          <div class="seg" role="group" aria-label="Tipo de receita"><button type="button" id="t-pessoa" aria-pressed="false">Pessoa</button><button type="button" id="t-pet" aria-pressed="true">Pet</button></div>
+        </div>
+      </div>
+      <label class="check" for="juntar"><input type="checkbox" id="juntar"> <span><b>Juntar horários próximos</b><br><span style="color:var(--muted)">Doses com até 1 hora de diferença passam para o horário mais cedo. Confirme com o médico ou veterinário antes.</span></span></label>
+    </div>
+    <div id="meds" style="display:flex;flex-direction:column;gap:12px"></div>
+    <div class="row">
+      <button class="btn" id="btn-add">+ Adicionar remédio</button>
+      <button class="btn primary" id="btn-gerar">Gerar tabela</button>
+    </div>
+  </section>
+
+  <!-- 3. TABELA -->
+  <section class="view" id="v-tabela">
+    <div>
+      <h2 id="tab-titulo">Tabela de remédios</h2>
+      <p class="lead">Toque num quadradinho para marcar uma dose que já foi dada antes de imprimir.</p>
+    </div>
+    <div class="week-nav">
+      <button class="btn ghost" id="wk-prev" aria-label="Semana anterior">‹ Anterior</button>
+      <strong id="wk-label">Semana 1</strong>
+      <button class="btn ghost" id="wk-next" aria-label="Próxima semana">Próxima ›</button>
+    </div>
+    <div class="table-wrap"><table class="sched" id="sched"></table></div>
+    <div class="notes" id="notes"></div>
+    <div class="card">
+      <h3>Baixar e lembrar</h3>
+      <div class="row">
+        <button class="btn primary" id="dl-pdf">Baixar PDF para imprimir</button>
+        <button class="btn" id="dl-xlsx">Baixar Excel</button>
+        <button class="btn" id="dl-ics">Adicionar ao calendário</button>
+      </div>
+      <p style="font-size:14px;color:var(--muted)">Calendário: baixe o arquivo .ics e abra no celular. No Google Agenda pelo computador, vá em Configurações › Importar e escolha o arquivo. Cada dose vira um evento com alarme.</p>
+    </div>
+    <div class="row">
+      <button class="btn ghost" id="btn-voltar">‹ Voltar e editar</button>
+      <button class="btn danger" id="btn-apagar">Apagar tudo e recomeçar</button>
+    </div>
+  </section>
+
+  <!-- PRIVACIDADE -->
+  <section class="view legal" id="v-privacidade">
+    <h2>Privacidade e LGPD</h2>
+    <p class="note">Rascunho para o protótipo. Revisar com um profissional de direito antes de publicar.</p>
+    <h3>Resumo</h3>
+    <ul>
+      <li>Receitas trazem dados de saúde, que a LGPD trata como dados pessoais sensíveis (art. 5º, II e art. 11).</li>
+      <li>O Jubs foi feito para não coletar esses dados: o arquivo é lido e a tabela é gerada no seu próprio navegador.</li>
+      <li>Nenhuma receita, nome ou horário é enviado aos nossos servidores ou guardado depois que você fecha a página.</li>
+    </ul>
+    <h3>O que acontece com a sua receita</h3>
+    <p>O arquivo fica só na memória do navegador enquanto a página está aberta. Os arquivos PDF, Excel e de calendário são criados no seu aparelho e salvos por você. O botão "Apagar tudo" limpa a memória na hora.</p>
+    <h3>Cookies e estatísticas</h3>
+    <p>Não usamos cookies de rastreamento nem ferramentas de estatística. Se isso mudar, vamos pedir seu consentimento antes, com opção de recusar.</p>
+    <h3>Seus direitos</h3>
+    <p>Como não guardamos seus dados, não há o que acessar, corrigir ou apagar do nosso lado. Dúvidas sobre privacidade: privacidade@jubs.com (endereço provisório).</p>
+    <h3>Aviso de saúde</h3>
+    <p>O Jubs organiza horários e não dá orientação médica ou veterinária. Em caso de dúvida, fale com quem receitou.</p>
+    <div><button class="btn" onclick="location.hash='inicio'">Voltar ao início</button></div>
+  </section>
+</main>
+
+<footer><div class="wrap">Jubs nasceu quando a Jujuba, uma shih tzu filhote, precisou de seis remédios em horários diferentes. · <a href="#privacidade">Privacidade</a></div></footer>
+
+<dialog id="dlg-consent" aria-labelledby="dc-t">
+  <form class="dlg" method="dialog" id="consent-form">
+    <h2 id="dc-t">Antes de ler sua receita</h2>
+    <p>Receitas têm dados de saúde. Por isso, o Jubs lê o arquivo <b>só no seu aparelho</b>: nada é enviado nem guardado.</p>
+    <p style="color:var(--muted);font-size:15px">A leitura automática pode errar. Na próxima tela você confere e corrige tudo antes da tabela ser criada.</p>
+    <label class="check" for="consent-ok"><input type="checkbox" id="consent-ok"> <span>Entendi e quero continuar.</span></label>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn ghost" value="cancel" type="submit">Cancelar</button>
+      <button class="btn primary" value="ok" id="consent-go" type="submit" disabled>Ler receita</button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+(() => {
+// ---------- estado (só em memória) ----------
+const DIAS = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const pad = n => String(n).padStart(2,"0");
+const isoDate = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today = isoDate(new Date());
+let state = blank();
+function blank(){ return { paciente:"", tipo:"pet", juntar:false, meds:[], given:new Set(), week:0, plan:null, origin:null }; }
+const newMed = (o={}) => ({ id:Math.random().toString(36).slice(2,8), nome:"", dose:"", intervalo:8, durTipo:"dias", dias:5, data:today, hora:"08:00", obs:"", ...o });
+
+const EXEMPLO = () => [
+  newMed({nome:"Mercepton oral", dose:"30 gotas", intervalo:8, dias:5, hora:"00:00"}),
+  newMed({nome:"Luftal", dose:"1 ml", intervalo:8, dias:2, hora:"01:00"}),
+  newMed({nome:"Vonau 6 mg", dose:"¼ comprimido", intervalo:12, dias:2, hora:"10:00", obs:"Se tiver vômito ou náusea, manter por mais 3 dias."}),
+  newMed({nome:"Glicol Pet", dose:"1,25 ml", intervalo:12, durTipo:"acabar", hora:"10:00", obs:"Dar até o fim do frasco."}),
+  newMed({nome:"Entero Fort", dose:"½ comprimido", intervalo:24, dias:5, hora:"08:00"}),
+  newMed({nome:"Vermivet Filhotes", dose:"3 ml", intervalo:24, dias:3, hora:"08:00", obs:"Repetir a dose 7 dias após a última."}),
+];
+
+// ---------- navegação ----------
+const VIEWS = ["inicio","lendo","revisar","tabela","privacidade"];
+const STEP = {inicio:1, lendo:1, revisar:2, tabela:3, privacidade:0};
+function show(name){
+  if(!VIEWS.includes(name)) name="inicio";
+  if((name==="revisar") && !state.meds.length) name="inicio";
+  if(name==="tabela" && !state.plan) name = state.meds.length ? "revisar" : "inicio";
+  VIEWS.forEach(v => document.getElementById("v-"+v).classList.toggle("on", v===name));
+  const s = STEP[name];
+  document.getElementById("steps").style.display = s ? "flex" : "none";
+  document.querySelectorAll(".step").forEach(el => {
+    const n = +el.dataset.s; el.classList.toggle("on", n===s); el.classList.toggle("done", n<s);
+  });
+  if(name==="revisar") renderMeds();
+  if(name==="tabela") renderTable();
+  window.scrollTo(0,0);
+}
+function go(name){ if(location.hash.slice(1)===name) show(name); else location.hash = name; }
+window.addEventListener("hashchange", () => show(location.hash.slice(1)));
+
+// ---------- tela 1 ----------
+const drop = document.getElementById("drop"), file = document.getElementById("file");
+drop.addEventListener("click", () => file.click());
+drop.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); file.click(); } });
+["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if(f) askConsent(f.name); });
+file.addEventListener("change", () => { if(file.files[0]) askConsent(file.files[0].name); file.value=""; });
+document.getElementById("btn-exemplo").onclick = () => askConsent("receita-exemplo.pdf");
+document.getElementById("btn-manual").onclick = () => { state = blank(); state.origin="manual"; state.meds=[newMed()]; state.tipo="pessoa"; go("revisar"); };
+
+const dlg = document.getElementById("dlg-consent"), ok = document.getElementById("consent-ok"), goBtn = document.getElementById("consent-go");
+ok.onchange = () => goBtn.disabled = !ok.checked;
+let pendingName = "";
+function askConsent(name){ pendingName = name; ok.checked=false; goBtn.disabled=true; dlg.showModal(); }
+dlg.addEventListener("close", () => { if(dlg.returnValue==="ok") readPrescription(pendingName); });
+
+function readPrescription(name){
+  go("lendo");
+  const bar = document.getElementById("bar");
+  bar.style.width="0"; requestAnimationFrame(() => requestAnimationFrame(() => bar.style.width="100%"));
+  document.getElementById("lendo-msg").textContent = `Lendo "${name}" no seu aparelho…`;
+  setTimeout(() => {
+    state = blank(); state.origin="arquivo"; state.paciente="Jujuba"; state.tipo="pet"; state.meds = EXEMPLO();
+    go("revisar");
+  }, 1400);
+}
+
+// ---------- tela 2 ----------
+const medsEl = document.getElementById("meds");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function renderMeds(){
+  document.getElementById("paciente").value = state.paciente;
+  document.getElementById("juntar").checked = state.juntar;
+  setTipo(state.tipo);
+  document.getElementById("rev-aviso").textContent = state.origin==="manual"
+    ? "Preencha os remédios da receita. Você pode adicionar quantos precisar."
+    : `Encontramos ${state.meds.length} remédios. Confira cada campo com a receita e corrija o que for preciso.`;
+  medsEl.innerHTML = state.meds.map((m,i) => `
+  <div class="card" data-id="${m.id}">
+    <div class="card-head"><h3>Remédio ${i+1}</h3><button class="link-btn" data-del="${m.id}">Remover</button></div>
+    <div class="grid">
+      <label for="n-${m.id}">Nome<input id="n-${m.id}" data-k="nome" value="${esc(m.nome)}" placeholder="Ex.: Dipirona 500 mg"></label>
+      <label for="d-${m.id}">Dose<input id="d-${m.id}" data-k="dose" value="${esc(m.dose)}" placeholder="Ex.: 1 comprimido, 20 gotas"></label>
+      <label for="i-${m.id}">Frequência<select id="i-${m.id}" data-k="intervalo">
+        ${[[4,"A cada 4 horas"],[6,"A cada 6 horas"],[8,"A cada 8 horas"],[12,"A cada 12 horas"],[24,"1 vez ao dia"],[48,"Dia sim, dia não"]].map(([v,t])=>`<option value="${v}" ${+m.intervalo===v?"selected":""}>${t}</option>`).join("")}
+      </select></label>
+      <label for="u-${m.id}">Por quanto tempo<select id="u-${m.id}" data-k="durTipo">
+        <option value="dias" ${m.durTipo==="dias"?"selected":""}>Número de dias</option>
+        <option value="acabar" ${m.durTipo==="acabar"?"selected":""}>Até acabar o frasco/caixa</option>
+        <option value="continuo" ${m.durTipo==="continuo"?"selected":""}>Uso contínuo</option>
+      </select></label>
+      <label for="q-${m.id}" ${m.durTipo!=="dias"?'style="display:none"':""}>Dias de tratamento<input id="q-${m.id}" type="number" min="1" max="90" data-k="dias" value="${m.dias}"></label>
+      <label for="a-${m.id}">Data da 1ª dose<input id="a-${m.id}" type="date" data-k="data" value="${m.data}"></label>
+      <label for="h-${m.id}">Horário da 1ª dose<input id="h-${m.id}" type="time" data-k="hora" value="${m.hora}"></label>
+    </div>
+    <label for="o-${m.id}">Observações<textarea id="o-${m.id}" data-k="obs" placeholder="Ex.: dar após a refeição">${esc(m.obs)}</textarea></label>
+  </div>`).join("");
+}
+medsEl.addEventListener("input", e => {
+  const k = e.target.dataset.k; if(!k) return;
+  const m = state.meds.find(x => x.id === e.target.closest(".card").dataset.id);
+  m[k] = (k==="intervalo"||k==="dias") ? +e.target.value : e.target.value;
+  state.plan = null;
+  if(k==="durTipo") renderMeds();
+});
+medsEl.addEventListener("click", e => {
+  const id = e.target.dataset.del; if(!id) return;
+  state.meds = state.meds.filter(m => m.id!==id); state.plan=null;
+  if(!state.meds.length) state.meds=[newMed()];
+  renderMeds();
+});
+document.getElementById("btn-add").onclick = () => { state.meds.push(newMed()); renderMeds(); medsEl.lastElementChild.querySelector("input").focus(); };
+document.getElementById("paciente").oninput = e => state.paciente = e.target.value;
+document.getElementById("juntar").onchange = e => { state.juntar = e.target.checked; state.plan=null; };
+function setTipo(t){ state.tipo=t; document.getElementById("t-pessoa").setAttribute("aria-pressed", t==="pessoa"); document.getElementById("t-pet").setAttribute("aria-pressed", t==="pet"); }
+document.getElementById("t-pessoa").onclick = () => setTipo("pessoa");
+document.getElementById("t-pet").onclick = () => setTipo("pet");
+document.getElementById("btn-gerar").onclick = () => {
+  const bad = state.meds.find(m => !m.nome.trim() || !m.dose.trim() || !m.data || !m.hora);
+  if(bad){ toast("Preencha nome, dose, data e horário de todos os remédios."); return; }
+  state.plan = buildPlan(state.meds, state.juntar); state.given = new Set(); state.week = 0;
+  go("tabela");
+};
+
+// ---------- motor de agendamento (função pura) ----------
+// Recebe os remédios e devolve linhas (horário + remédio), dias e as doses de cada célula.
+function buildPlan(meds, juntar){
+  const HORIZONTE = 28; // dias exibidos para "contínuo" e "até acabar"
+  const doses = [];
+  meds.forEach((m, mi) => {
+    const [y,mo,d] = m.data.split("-").map(Number), [hh,mm] = m.hora.split(":").map(Number);
+    const start = new Date(y, mo-1, d, hh, mm);
+    const dias = m.durTipo==="dias" ? m.dias : HORIZONTE;
+    const end = new Date(start.getTime() + dias*864e5);
+    for(let t = new Date(start); t < end; t = new Date(t.getTime() + m.intervalo*36e5)){
+      doses.push({ mi, t, min: t.getHours()*60 + t.getMinutes() });
+    }
+  });
+  // juntar: cada dose vai para o horário já usado mais cedo, até 60 min antes
+  if(juntar){
+    const slots = [];
+    [...doses].sort((a,b) => a.min-b.min).forEach(ds => {
+      const s = slots.find(x => ds.min - x >= 0 && ds.min - x <= 60);
+      if(s!==undefined) ds.slot = s; else { slots.push(ds.min); ds.slot = ds.min; }
+    });
+  } else doses.forEach(ds => ds.slot = ds.min);
+  const first = new Date(Math.min(...doses.map(d => d.t))); first.setHours(0,0,0,0);
+  const last = new Date(Math.max(...doses.map(d => d.t)));
+  const totalDays = Math.floor((last - first)/864e5) + 1;
+  const weeks = Math.max(1, Math.ceil(totalDays/7));
+  const rows = new Map(); // key slot|mi
+  doses.forEach(ds => {
+    const key = `${ds.slot}|${ds.mi}`;
+    if(!rows.has(key)) rows.set(key, { key, slot:ds.slot, mi:ds.mi, days:new Set() });
+    const day = new Date(ds.t); day.setHours(0,0,0,0);
+    rows.get(key).days.add(Math.round((day - first)/864e5));
+  });
+  const sorted = [...rows.values()].sort((a,b) => a.slot-b.slot || a.mi-b.mi);
+  return { first, weeks, rows: sorted, meds: meds.map(m => ({...m})), doses };
+}
+const hhmm = min => `${pad(Math.floor(min/60))}:${pad(min%60)}`;
+const dayDate = (plan, i) => { const d = new Date(plan.first); d.setDate(d.getDate()+i); return d; };
+const dayLabel = d => `${DIAS[d.getDay()]} ${pad(d.getDate())}/${pad(d.getMonth()+1)}`;
+
+// ---------- tela 3 ----------
+function weekRows(plan, w){ return plan.rows.filter(r => [...r.days].some(d => d>=w*7 && d<w*7+7)); }
+function renderTable(){
+  const p = state.plan, w = state.week;
+  document.getElementById("tab-titulo").textContent = "Tabela de remédios" + (state.paciente ? " — " + state.paciente : "");
+  document.getElementById("wk-label").textContent = `Semana ${w+1} de ${p.weeks}`;
+  document.getElementById("wk-prev").disabled = w===0;
+  document.getElementById("wk-next").disabled = w>=p.weeks-1;
+  const cols = [...Array(7)].map((_,i) => dayDate(p, w*7+i));
+  let html = `<thead><tr><th>Horário</th><th>Remédio</th>${cols.map(d=>`<th>${dayLabel(d).replace(" ","<br>")}</th>`).join("")}</tr></thead><tbody>`;
+  let prevSlot = null;
+  weekRows(p, w).forEach(r => {
+    const m = p.meds[r.mi];
+    html += `<tr class="${prevSlot!==null && prevSlot!==r.slot ? "sep":""}"><td class="t">${hhmm(r.slot)}</td><td class="m"><b>${esc(m.nome)}</b><span>${esc(m.dose)}</span></td>`;
+    for(let i=0;i<7;i++){
+      const di = w*7+i, k = `${r.key}|${di}`;
+      if(r.days.has(di)){
+        const g = state.given.has(k);
+        html += `<td><button class="${g?"given":""}" data-k="${k}" aria-label="${g?"Dose dada":"Marcar dose como dada"}: ${esc(m.nome)} ${hhmm(r.slot)} ${dayLabel(cols[i])}">${g?"✔ dado":""}</button></td>`;
+      } else html += `<td class="off" aria-label="sem dose"></td>`;
+    }
+    html += `</tr>`; prevSlot = r.slot;
+  });
+  document.getElementById("sched").innerHTML = html + "</tbody>";
+  const notes = p.meds.filter(m => m.obs.trim()).map(m => `<p><b>${esc(m.nome)}:</b> ${esc(m.obs)}</p>`);
+  if(p.meds.some(m => m.durTipo!=="dias")) notes.push(`<p>Uso contínuo ou até acabar: mostramos as próximas 4 semanas.</p>`);
+  if(state.juntar) notes.push(`<p>Horários próximos foram juntados. Confirme com quem receitou.</p>`);
+  document.getElementById("notes").innerHTML = notes.join("");
+}
+document.getElementById("sched").addEventListener("click", e => {
+  const b = e.target.closest("button[data-k]"); if(!b) return;
+  const k = b.dataset.k; state.given.has(k) ? state.given.delete(k) : state.given.add(k); renderTable();
+});
+document.getElementById("wk-prev").onclick = () => { state.week--; renderTable(); };
+document.getElementById("wk-next").onclick = () => { state.week++; renderTable(); };
+document.getElementById("btn-voltar").onclick = () => go("revisar");
+document.getElementById("btn-apagar").onclick = () => { state = blank(); toast("Tudo apagado. Nada ficou salvo."); go("inicio"); };
+
+// ---------- arquivos ----------
+const fileBase = () => "jubs-" + (state.paciente ? state.paciente.toLowerCase().normalize("NFD").replace(/[^\w]+/g,"-") : "remedios");
+let dlPromise = null;
+function downloads(){ if(!dlPromise) dlPromise = (window.claude && typeof window.claude.use==="function") ? window.claude.use("downloads").catch(()=>null) : Promise.resolve(null); return dlPromise; }
+async function save(name, data, mime){
+  const dl = await downloads();
+  if(dl){
+    try { await dl.save({ filename:name, data }); toast("Arquivo pronto: " + name); return; }
+    catch(err){
+      if(err && err.code==="declined") return;
+      if(err && err.code==="rejected_extension"){ toast("Aqui na pré-visualização este formato não pode ser baixado. Abra o arquivo HTML do protótipo no navegador para testar."); return; }
+    }
+  }
+  try{
+    const blob = data instanceof Blob ? data : new Blob([data], {type:mime});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast("Arquivo pronto: " + name);
+  }catch(e){ toast("Não foi possível baixar aqui. Abra o protótipo no navegador."); }
+}
+
+document.getElementById("dl-pdf").onclick = () => {
+  if(!window.jspdf){ toast("Biblioteca de PDF não carregou. Verifique a internet."); return; }
+  const p = state.plan, { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:"landscape", unit:"mm", format:"a4" });
+  for(let w=0; w<p.weeks; w++){
+    if(w) doc.addPage();
+    const cols = [...Array(7)].map((_,i) => dayDate(p, w*7+i));
+    doc.setFont("helvetica","bold"); doc.setFontSize(16);
+    doc.text("Remédios" + (state.paciente ? " — " + state.paciente : "") + `  ·  semana ${w+1} de ${p.weeks}`, 12, 14);
+    doc.setFont("helvetica","normal"); doc.setFontSize(9);
+    doc.text("Marque com X cada dose dada. Cinza = sem dose. Confira sempre com a receita original.", 12, 20);
+    const rows = weekRows(p, w);
+    const body = rows.map(r => [hhmm(r.slot), p.meds[r.mi].nome + "\n" + p.meds[r.mi].dose, ...cols.map((_,i) => state.given.has(`${r.key}|${w*7+i}`) ? "dado" : "")]);
+    doc.autoTable({
+      startY: 24, head: [["Horário","Remédio", ...cols.map(dayLabel)]], body,
+      theme: "grid", styles:{ fontSize:10, cellPadding:2.5, valign:"middle", lineColor:[60,60,60], lineWidth:0.25, minCellHeight:11 },
+      headStyles:{ fillColor:[227,239,233], textColor:20, halign:"center" },
+      columnStyles:{ 0:{cellWidth:18, fontStyle:"bold", halign:"center"}, 1:{cellWidth:58} },
+      didParseCell: d => {
+        if(d.section!=="body" || d.column.index<2) return;
+        const r = rows[d.row.index], di = w*7 + d.column.index - 2;
+        d.cell.styles.halign = "center"; d.cell.styles.fontSize = 8; d.cell.styles.textColor = [47,111,94];
+        if(!r.days.has(di)) d.cell.styles.fillColor = [225,227,226];
+      },
+      didDrawCell: d => {
+        if(d.section!=="body" || d.column.index<2) return;
+        const r = rows[d.row.index], di = w*7 + d.column.index - 2;
+        if(r.days.has(di) && !state.given.has(`${r.key}|${di}`)){
+          const s = 6; d.doc.setDrawColor(20); d.doc.setLineWidth(0.5);
+          d.doc.rect(d.cell.x + (d.cell.width-s)/2, d.cell.y + (d.cell.height-s)/2, s, s);
+        }
+      }
+    });
+    let y = doc.lastAutoTable.finalY + 7; doc.setFontSize(9);
+    p.meds.filter(m => m.obs.trim()).forEach(m => { doc.text(`• ${m.nome}: ${m.obs}`, 12, y); y += 5; });
+    doc.setTextColor(120); doc.text("Gerado com Jubs · a receita foi lida só no seu aparelho", 12, 200); doc.setTextColor(0);
+  }
+  save(fileBase()+".pdf", doc.output("blob"), "application/pdf");
+};
+
+document.getElementById("dl-xlsx").onclick = () => {
+  if(!window.XLSX){ toast("Biblioteca de Excel não carregou. Verifique a internet."); return; }
+  const p = state.plan, wb = XLSX.utils.book_new();
+  for(let w=0; w<p.weeks; w++){
+    const cols = [...Array(7)].map((_,i) => dayDate(p, w*7+i));
+    const aoa = [["Horário","Remédio","Dose", ...cols.map(dayLabel)]];
+    weekRows(p, w).forEach(r => aoa.push([hhmm(r.slot), p.meds[r.mi].nome, p.meds[r.mi].dose,
+      ...cols.map((_,i) => { const di=w*7+i; return !r.days.has(di) ? "—" : state.given.has(`${r.key}|${di}`) ? "✔ dado" : "☐"; })]));
+    const ws = XLSX.utils.aoa_to_sheet(aoa); ws["!cols"] = [{wch:9},{wch:22},{wch:14}, ...cols.map(()=>({wch:10}))];
+    XLSX.utils.book_append_sheet(wb, ws, `Semana ${w+1}`);
+  }
+  const buf = XLSX.write(wb, { bookType:"xlsx", type:"array" });
+  save(fileBase()+".xlsx", new Blob([buf], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}));
+};
+
+document.getElementById("dl-ics").onclick = () => {
+  const p = state.plan, fmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+  const stamp = fmt(new Date()), L = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Jubs//Tabela de remedios//PT","CALSCALE:GREGORIAN"];
+  p.doses.forEach((ds, n) => {
+    const t = new Date(ds.t); t.setHours(Math.floor(ds.slot/60), ds.slot%60, 0, 0);
+    const k = `${ds.slot}|${ds.mi}|${Math.round((new Date(t).setHours(0,0,0,0) - p.first)/864e5)}`;
+    if(state.given.has(k)) return;
+    const m = p.meds[ds.mi], end = new Date(t.getTime()+10*6e4);
+    L.push("BEGIN:VEVENT", `UID:jubs-${stamp}-${n}@jubs.com`, `DTSTAMP:${stamp}`, `DTSTART:${fmt(t)}`, `DTEND:${fmt(end)}`,
+      `SUMMARY:${m.nome} — ${m.dose}`.replace(/[,;]/g,"\\$&"), `DESCRIPTION:${(m.obs||"Dose da receita").replace(/[,;]/g,"\\$&")}`,
+      "BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:Hora do remédio: ${m.nome}`.replace(/[,;]/g,"\\$&"),"TRIGGER:PT0M","END:VALARM","END:VEVENT");
+  });
+  L.push("END:VCALENDAR");
+  save(fileBase()+".ics", L.join("\r\n"), "text/calendar");
+};
+
+let tt;
+function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 4200); }
+
+show(location.hash.slice(1) || "inicio");
+})();
+</script>
+</body>
+</html>

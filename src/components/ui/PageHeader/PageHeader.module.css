@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 68ch;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 700;
+}
+
+.title svg {
+  width: 0.8em;
+  height: 0.8em;
+  flex: none;
+}
+
+.description {
+  color: var(--color-muted);
+  font-size: clamp(16px, 1.6vw, 18px);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

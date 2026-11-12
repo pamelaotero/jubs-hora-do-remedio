@@ -1,0 +1,100 @@
+.wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--color-line);
+  border-right: 1px solid var(--color-line);
+  text-align: center;
+}
+
+.table th:last-child,
+.table td:last-child {
+  border-right: 0;
+}
+
+.table thead th {
+  background: var(--color-ink);
+  color: var(--color-inverse);
+  font-weight: 600;
+  border-color: rgb(255 255 255 / 0.12);
+}
+
+.table thead th span {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.time {
+  font-weight: 700;
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  background: var(--color-surface);
+}
+
+.medication {
+  text-align: left !important;
+  min-width: 150px;
+}
+
+.medication strong {
+  display: block;
+}
+
+.medication span {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.newSlot > * {
+  border-top: 2px solid var(--color-ink);
+}
+
+.off {
+  background: repeating-linear-gradient(-45deg, var(--color-soft), var(--color-soft) 4px, #f5f3f0 4px, #f5f3f0 8px);
+}
+
+.dose {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid var(--color-ink);
+  border-radius: 8px;
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.dose:hover {
+  background: var(--color-soft);
+}
+
+.dose svg {
+  width: 18px;
+  height: 18px;
+}
+
+.given,
+.given:hover {
+  background: var(--color-ink);
+  color: var(--color-inverse);
+}

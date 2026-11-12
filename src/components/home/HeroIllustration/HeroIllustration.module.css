@@ -1,0 +1,77 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+  aspect-ratio: 900 / 775;
+}
+
+.blob {
+  position: absolute;
+  inset: 4% 0 6% 12%;
+  background: var(--color-soft);
+  border-radius: 58% 42% 46% 54% / 52% 48% 52% 48%;
+}
+
+.paw {
+  position: absolute;
+  left: 2%;
+  top: 0;
+  width: 14%;
+  height: auto;
+  color: var(--color-soft-strong);
+  fill: var(--color-soft-strong);
+  transform: rotate(-18deg);
+}
+
+/* Riscos de "movimento" ao lado da orelha, como no protótipo. */
+.motion {
+  position: absolute;
+  right: 1%;
+  top: 12%;
+  width: 10%;
+  aspect-ratio: 1;
+}
+
+.motion i {
+  position: absolute;
+  left: 0;
+  height: 5px;
+  border-radius: 4px;
+  background: var(--color-ink);
+  transform-origin: left center;
+}
+
+.motion i:nth-child(1) {
+  top: 8%;
+  width: 45%;
+  transform: rotate(50deg);
+}
+
+.motion i:nth-child(2) {
+  top: 45%;
+  width: 70%;
+  transform: rotate(18deg);
+}
+
+.motion i:nth-child(3) {
+  top: 85%;
+  width: 75%;
+}
+
+.dog {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-ink) 20%, var(--color-ink) 80%, transparent);
+  opacity: 0.2;
+}
