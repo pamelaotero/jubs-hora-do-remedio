@@ -85,6 +85,17 @@ export const pt = {
     days: (n: number) => `${n} dias`,
     noDoses: 'Sem doses',
     seeFull: 'Ver tabela completa',
+    leadExample: 'Veja como fica o arquivo que você recebe. Troque a aba para ver em PDF ou Excel e baixe o exemplo.',
+    leadOwn: 'Prévia da sua tabela em cada formato.',
+    tabsLabel: 'Formato da prévia',
+    tabs: { pdf: 'PDF', xlsx: 'Excel', days: 'Dias' },
+    pdfCaption: 'PDF em A4 para imprimir, com um quadradinho para marcar cada dose à caneta.',
+    xlsxCaption: 'Planilha .xlsx com uma aba por semana. Abre no Excel e no Google Planilhas.',
+    downloadExample: (format: string) => `Baixar exemplo em ${format}`,
+    download: (format: string) => `Baixar ${format}`,
+    exampleNote: 'Exemplo com dados fictícios, gerado no seu aparelho.',
+    filePrefix: 'exemplo-',
+    moreRows: (n: number) => `+ ${n} ${n === 1 ? 'horário' : 'horários'} no arquivo completo`,
   },
 
   howItWorks: {

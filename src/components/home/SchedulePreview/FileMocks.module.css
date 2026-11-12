@@ -1,0 +1,157 @@
+/* ---- PDF: folha A4 em paisagem ---- */
+.paper {
+  min-width: 640px;
+  padding: 22px 24px 16px;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 10px 28px rgb(0 0 0 / 0.08);
+  font-family: Helvetica, Arial, sans-serif;
+  color: #111;
+}
+
+.paperTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.paperHint {
+  margin: 2px 0 12px;
+  font-size: 11px;
+  color: #444;
+}
+
+.pdfTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pdfTable th,
+.pdfTable td {
+  border: 1px solid #3c3c3c;
+  padding: 6px 6px;
+  text-align: center;
+}
+
+.pdfTable th {
+  background: #1f1f1f;
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+  min-width: 52px;
+}
+
+.pdfTime {
+  font-weight: 700;
+}
+
+.pdfMed {
+  text-align: left !important;
+  white-space: nowrap;
+}
+
+.pdfMed span {
+  display: block;
+  font-size: 11px;
+  color: #444;
+}
+
+.pdfEmpty {
+  background: #e1e1e1;
+}
+
+.checkbox {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #141414;
+  vertical-align: middle;
+}
+
+.paperFooter {
+  margin: 14px 0 0;
+  font-size: 10px;
+  color: #787878;
+}
+
+/* ---- Excel: grade da planilha ---- */
+.sheet {
+  min-width: 640px;
+  background: #fff;
+  border: 1px solid #c9c9c9;
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  color: #111;
+}
+
+.xlsxTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.xlsxTable th,
+.xlsxTable td {
+  border: 1px solid #dadada;
+  padding: 5px 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.xlsxTable thead th,
+.xlsxTable tbody th {
+  background: #f3f3f3;
+  color: #666;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.xlsxTable tbody th {
+  width: 32px;
+}
+
+.corner {
+  width: 32px;
+}
+
+.xlsxHeader td {
+  font-weight: 700;
+}
+
+.xlsxText {
+  text-align: left !important;
+}
+
+.sheetTabs {
+  display: flex;
+  padding: 0 0 0 40px;
+  background: #f3f3f3;
+  border-top: 1px solid #dadada;
+}
+
+.sheetTabActive {
+  padding: 5px 16px;
+  background: #fff;
+  border-bottom: 2px solid #1d6f42;
+  color: #1d6f42;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.more {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.sheet .more {
+  padding: 0 12px 8px;
+}
