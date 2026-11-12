@@ -49,7 +49,7 @@ const webApplicationSchema = (locale: Locale) => {
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     featureList: t.formats.items.map((item) => item.title),
     image: absoluteUrl(ogImagePath(locale)),
-    author: { '@type': 'Person', name: AUTHOR.name, url: AUTHOR.url },
+    author: { '@type': 'Person', name: AUTHOR.name },
   };
 };
 

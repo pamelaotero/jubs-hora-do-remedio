@@ -60,14 +60,9 @@
   text-align: center;
 }
 
-.credit a {
+.credit strong {
   color: var(--color-ink);
   font-weight: 700;
-  text-underline-offset: 3px;
-}
-
-.credit a:hover {
-  text-decoration-thickness: 2px;
 }
 
 @media (max-width: 760px) {

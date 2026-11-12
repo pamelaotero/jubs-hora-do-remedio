@@ -23,10 +23,7 @@ export function Footer() {
           <span>{t.footer.noStorage}</span>
         </nav>
         <p className={styles.credit}>
-          {t.footer.createdBy}{' '}
-          <a href={AUTHOR.url} target="_blank" rel="noopener">
-            {AUTHOR.name}
-          </a>
+          {t.footer.createdBy} <strong>{AUTHOR.name}</strong>
         </p>
       </div>
     </footer>

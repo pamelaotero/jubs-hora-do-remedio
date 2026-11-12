@@ -2,7 +2,6 @@ export const APP_NAME = 'Jubs';
 
 export const AUTHOR = {
   name: 'Pamela Otero',
-  url: 'https://pamelaoterodeveloper.tech/',
 } as const;
 
 /**
