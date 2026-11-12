@@ -2,7 +2,7 @@
  * URL pública do site (sem barra no final). Usada em canonical, hreflang, sitemap e Open Graph.
  * Configure VITE_SITE_URL no .env com o domínio real antes de publicar.
  */
-export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || 'https://jubs.pamelaoterodeveloper.tech').replace(
+export const SITE_URL: string = (import.meta.env.VITE_SITE_URL || 'https://jubstime.com').replace(
   /\/+$/,
   '',
 );
