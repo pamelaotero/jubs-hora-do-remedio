@@ -58,8 +58,10 @@ export const pt = {
     leadStrong: 'Cuidar de quem você ama, de duas ou de quatro patas, fica muito mais fácil.',
     fillManually: 'Preencher à mão',
     trySample: 'Ver com receita de exemplo',
-    privacyPrefix: 'A receita é lida no seu aparelho e',
-    privacyStrong: 'nunca é salva',
+    privacyPrefix: 'Seus dados de saúde ficam só com você:',
+    privacyStrong: 'não guardamos sua receita nem enviamos para ninguém',
+    privacySuffix: '. Tudo acontece no seu celular ou computador e é apagado quando você fecha a página.',
+    privacyLink: 'Saiba mais',
   },
 
   upload: {

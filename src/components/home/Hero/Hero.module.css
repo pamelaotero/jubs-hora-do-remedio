@@ -56,7 +56,8 @@
 
 .privacy {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  line-height: 1.5;
   gap: 8px;
   font-size: 14px;
   color: var(--color-muted);
@@ -71,6 +72,12 @@
 
 .privacy strong {
   color: var(--color-ink);
+}
+
+.privacy a {
+  color: var(--color-ink);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 @media (max-width: 860px) {

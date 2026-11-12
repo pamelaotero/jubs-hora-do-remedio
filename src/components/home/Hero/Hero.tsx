@@ -1,4 +1,5 @@
 import { FilePenLine, FileSearch, PawPrint, ShieldCheck, UserRound } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui';
 import { useI18n } from '@/hooks/useI18n';
 import { HeroIllustration } from '../HeroIllustration/HeroIllustration';
@@ -12,7 +13,7 @@ interface HeroProps {
 }
 
 export function Hero({ onFileSelected, onTrySample, onFillManually }: HeroProps) {
-  const { t } = useI18n();
+  const { t, path } = useI18n();
   const { hero } = t;
 
   return (
@@ -46,7 +47,8 @@ export function Hero({ onFileSelected, onTrySample, onFillManually }: HeroProps)
         <p className={styles.privacy}>
           <ShieldCheck aria-hidden="true" />
           <span>
-            {hero.privacyPrefix} <strong>{hero.privacyStrong}</strong>.
+            {hero.privacyPrefix} <strong>{hero.privacyStrong}</strong>
+            {hero.privacySuffix} <Link to={path('privacy')}>{hero.privacyLink}</Link>
           </span>
         </p>
       </div>

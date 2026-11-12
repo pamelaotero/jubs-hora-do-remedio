@@ -59,8 +59,10 @@ export const en: Messages = {
     leadStrong: 'Caring for the ones you love, on two legs or four, just got much easier.',
     fillManually: 'Fill in manually',
     trySample: 'Try a sample prescription',
-    privacyPrefix: 'Your prescription is read on your device and',
-    privacyStrong: 'never stored',
+    privacyPrefix: 'Your health data stays with you:',
+    privacyStrong: 'we never keep your prescription or send it to anyone',
+    privacySuffix: '. Everything happens on your phone or computer and is erased when you close the page.',
+    privacyLink: 'Learn more',
   },
 
   upload: {
