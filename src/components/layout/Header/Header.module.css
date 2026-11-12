@@ -74,6 +74,10 @@
   transform: scaleX(1);
 }
 
+.shortLabel {
+  display: none;
+}
+
 /* Celular: barra de navegação fixa embaixo (alcance do polegar). */
 @media (max-width: 760px) {
   /* backdrop-filter criaria um containing block e prenderia a nav fixa dentro do header. */
@@ -115,5 +119,19 @@
   .active {
     color: var(--color-ink);
     background: var(--color-soft);
+  }
+
+  /* Rótulo completo continua disponível para leitores de tela. */
+  .fullLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .shortLabel {
+    display: inline;
   }
 }

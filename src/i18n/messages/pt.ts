@@ -24,7 +24,7 @@ export const pt = {
       reading: { title: `Lendo a receita | ${APP_NAME}`, description: '' },
       review: { title: `Conferir receita | ${APP_NAME}`, description: '' },
       schedule: { title: `Tabela de horários | ${APP_NAME}`, description: '' },
-      recipes: { title: `Minhas Receitas | ${APP_NAME}`, description: '' },
+      recipes: { title: `Receita atual | ${APP_NAME}`, description: '' },
       settings: { title: `Configurações | ${APP_NAME}`, description: '' },
     },
     notFoundTitle: `Página não encontrada | ${APP_NAME}`,
@@ -34,7 +34,9 @@ export const pt = {
   nav: {
     main: 'Principal',
     home: 'Início',
-    recipes: 'Minhas Receitas',
+    recipes: 'Receita atual',
+    privacy: 'Privacidade e LGPD',
+    privacyShort: 'LGPD',
     settings: 'Configurações',
     skip: 'Pular para o conteúdo',
     language: 'Idioma',
@@ -44,7 +46,7 @@ export const pt = {
     label: 'Rodapé',
     tagline: 'Cuidado em cada detalhe',
     privacy: 'Privacidade',
-    noStorage: 'Nenhuma receita é salva',
+    noStorage: 'Não salvamos receitas nem dados de saúde',
     createdBy: 'Criado por',
   },
 
@@ -62,7 +64,7 @@ export const pt = {
 
   upload: {
     title: 'Toque para enviar a receita',
-    hint: 'Receita médica ou veterinária · PDF ou foto (JPG, PNG)',
+    hint: 'Receita médica ou veterinária · PDF ou foto (JPG, PNG) · nada é enviado nem salvo',
   },
 
   features: {
@@ -281,9 +283,9 @@ export const pt = {
   },
 
   recipes: {
-    title: 'Minhas Receitas',
-    description: 'A receita aberta nesta sessão.',
-    privacy: `Por privacidade, o ${APP_NAME} não guarda receitas. A receita existe só enquanto esta aba estiver aberta — ao fechar ou recarregar a página, tudo é apagado.`,
+    title: 'Receita atual',
+    description: 'A receita aberta agora, só nesta aba. Não existe histórico de receitas.',
+    privacy: `O ${APP_NAME} não salva receitas — de propósito. Receitas têm dados de saúde, que a LGPD trata como dados sensíveis, então a receita é processada só no seu dispositivo e não é enviada, armazenada nem compartilhada. Ela existe só enquanto esta aba estiver aberta: ao fechar ou recarregar a página, tudo é apagado. Se quiser guardar, baixe o PDF, o Excel ou o calendário no seu aparelho.`,
     unnamed: 'Receita sem nome',
     medicationCount: (n: number) => plural(n, 'remédio', 'remédios'),
     planReady: 'tabela gerada',
@@ -314,17 +316,29 @@ export const pt = {
 
   privacy: {
     title: 'Privacidade e LGPD',
+    description: 'Como o site trata seus dados, de acordo com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).',
+    highlightTitle: 'Este site não salva receitas.',
+    highlightBody: 'Sua receita é processada diretamente no seu dispositivo. O documento não é enviado, armazenado nem compartilhado pela plataforma — nem temporariamente. Ao fechar a página, tudo some.',
     draft: 'Rascunho para o protótipo. Revisar com um profissional de direito antes de publicar.',
     summaryTitle: 'Resumo',
     summary: [
       'Receitas trazem dados de saúde, que a LGPD trata como dados pessoais sensíveis (art. 5º, II e art. 11).',
       `O ${APP_NAME} foi feito para não coletar esses dados: a tabela é gerada no seu próprio navegador.`,
       'Nenhuma receita, nome ou horário é armazenado — nem no servidor, nem no navegador.',
+      'Não há cadastro, login nem histórico: não temos como ver, guardar ou compartilhar suas receitas.',
     ],
     sections: [
       {
+        title: 'Por que não salvamos receitas',
+        body: `Receitas médicas e veterinárias revelam diagnósticos, tratamentos e remédios. Guardar esse tipo de informação exigiria uma base legal específica, medidas de segurança reforçadas e responsabilidade por possíveis vazamentos. Para não colocar seus dados em risco, o ${APP_NAME} foi construído para simplesmente não armazená-los: o que não é guardado não pode vazar.`,
+      },
+      {
         title: 'O que acontece com a sua receita',
         body: `O arquivo é lido apenas na memória do navegador enquanto a página está aberta. O ${APP_NAME} não envia a receita para servidores, não grava no navegador (sem localStorage, cookies ou banco de dados) e não mantém histórico. Os arquivos PDF, Excel e de calendário são criados no seu aparelho e salvos por você. "Apagar tudo" limpa a memória na hora.`,
+      },
+      {
+        title: 'Envio, cache e registros técnicos',
+        body: 'A receita não é enviada para nenhum servidor, nem por um instante: o site não faz upload de arquivos. O documento também não fica no cache do navegador, porque é aberto direto do seu aparelho e não é baixado da internet. Não existem registros (logs) com o conteúdo da receita. Como qualquer site, a hospedagem (Vercel) registra apenas dados técnicos de acesso, como endereço IP e página visitada, que não incluem nada da sua receita.',
       },
       {
         title: 'Cookies e estatísticas',

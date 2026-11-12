@@ -16,7 +16,7 @@ export function Header() {
         <Logo />
         <div className={styles.right}>
           <nav aria-label={t.nav.main} className={styles.nav}>
-            {NAV_ITEMS.map(({ route, labelKey, icon: Icon }) => (
+            {NAV_ITEMS.map(({ route, labelKey, shortLabelKey, icon: Icon }) => (
               <NavLink
                 key={route}
                 to={path(route)}
@@ -24,7 +24,16 @@ export function Header() {
                 className={({ isActive }) => cx(styles.link, isActive && styles.active)}
               >
                 <Icon aria-hidden="true" />
-                <span>{t.nav[labelKey]}</span>
+                {shortLabelKey ? (
+                  <>
+                    <span className={styles.fullLabel}>{t.nav[labelKey]}</span>
+                    <span className={styles.shortLabel} aria-hidden="true">
+                      {t.nav[shortLabelKey]}
+                    </span>
+                  </>
+                ) : (
+                  <span>{t.nav[labelKey]}</span>
+                )}
               </NavLink>
             ))}
           </nav>

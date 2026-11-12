@@ -10,7 +10,13 @@ export function PrivacyPage() {
 
   return (
     <div className={`${pageStyles.page} ${pageStyles.narrow}`}>
-      <PageHeader icon={<ShieldCheck aria-hidden="true" />} title={privacy.title} />
+      <PageHeader icon={<ShieldCheck aria-hidden="true" />} title={privacy.title} description={privacy.description} />
+
+      <Notice variant="privacy">
+        <strong className={styles.highlightTitle}>{privacy.highlightTitle}</strong>
+        {privacy.highlightBody}
+      </Notice>
+
       <Notice>{privacy.draft}</Notice>
 
       <Card padding="lg" className={styles.content}>

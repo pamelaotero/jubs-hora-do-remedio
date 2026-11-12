@@ -25,7 +25,7 @@ export const en: Messages = {
       reading: { title: `Reading prescription | ${APP_NAME}`, description: '' },
       review: { title: `Review prescription | ${APP_NAME}`, description: '' },
       schedule: { title: `Medication schedule | ${APP_NAME}`, description: '' },
-      recipes: { title: `My Prescriptions | ${APP_NAME}`, description: '' },
+      recipes: { title: `Current prescription | ${APP_NAME}`, description: '' },
       settings: { title: `Settings | ${APP_NAME}`, description: '' },
     },
     notFoundTitle: `Page not found | ${APP_NAME}`,
@@ -35,7 +35,9 @@ export const en: Messages = {
   nav: {
     main: 'Main',
     home: 'Home',
-    recipes: 'My Prescriptions',
+    recipes: 'Current prescription',
+    privacy: 'Privacy & LGPD',
+    privacyShort: 'Privacy',
     settings: 'Settings',
     skip: 'Skip to content',
     language: 'Language',
@@ -45,7 +47,7 @@ export const en: Messages = {
     label: 'Footer',
     tagline: 'Care in every detail',
     privacy: 'Privacy',
-    noStorage: 'No prescription is ever stored',
+    noStorage: 'We never store prescriptions or health data',
     createdBy: 'Created by',
   },
 
@@ -63,7 +65,7 @@ export const en: Messages = {
 
   upload: {
     title: 'Tap to upload your prescription',
-    hint: 'Medical or vet prescription · PDF or photo (JPG, PNG)',
+    hint: 'Medical or vet prescription · PDF or photo (JPG, PNG) · nothing is uploaded or stored',
   },
 
   features: {
@@ -279,9 +281,9 @@ export const en: Messages = {
   },
 
   recipes: {
-    title: 'My Prescriptions',
-    description: 'The prescription open in this session.',
-    privacy: `For your privacy, ${APP_NAME} does not store prescriptions. It only exists while this tab is open — closing or reloading the page erases everything.`,
+    title: 'Current prescription',
+    description: 'The prescription open right now, in this tab only. There is no prescription history.',
+    privacy: `${APP_NAME} does not store prescriptions — on purpose. Prescriptions contain health data, which privacy laws treat as sensitive, so your prescription is processed only on your device and is never uploaded, stored or shared. It only exists while this tab is open: closing or reloading the page erases everything. To keep it, download the PDF, Excel or calendar file to your device.`,
     unnamed: 'Unnamed prescription',
     medicationCount: (n: number) => plural(n, 'medicine', 'medicines'),
     planReady: 'schedule created',
@@ -307,22 +309,34 @@ export const en: Messages = {
     privacy: 'Your preferences are not stored either: nothing goes to cookies, browser storage or servers.',
     reset: 'Restore defaults',
     resetDone: 'Settings restored.',
-    privacyLink: 'Privacy',
+    privacyLink: 'Privacy & LGPD',
   },
 
   privacy: {
-    title: 'Privacy',
+    title: 'Privacy & LGPD',
+    description: 'How this site handles your data, in line with Brazil’s General Data Protection Law (LGPD) and similar laws such as GDPR.',
+    highlightTitle: 'This site does not store prescriptions.',
+    highlightBody: 'Your prescription is processed directly on your device. The document is not uploaded, stored or shared by the platform — not even temporarily. When you close the page, it is gone.',
     draft: 'Prototype draft. Have it reviewed by a legal professional before publishing.',
     summaryTitle: 'Summary',
     summary: [
       'Prescriptions contain health data, which privacy laws such as GDPR and Brazil’s LGPD treat as sensitive personal data.',
       `${APP_NAME} is designed not to collect this data: the schedule is created in your own browser.`,
       'No prescription, name or time is stored — not on a server, not in your browser.',
+      'There is no sign-up, login or history: we have no way to see, keep or share your prescriptions.',
     ],
     sections: [
       {
+        title: 'Why we do not store prescriptions',
+        body: `Medical and vet prescriptions reveal diagnoses, treatments and medicines. Storing that kind of information would require a specific legal basis, stronger security measures and responsibility for possible leaks. To keep your data out of risk, ${APP_NAME} is built to simply not store it: what is never kept cannot leak.`,
+      },
+      {
         title: 'What happens to your prescription',
         body: `The file is only read in the browser’s memory while the page is open. ${APP_NAME} does not upload the prescription, does not write to your browser (no localStorage, cookies or database) and keeps no history. The PDF, Excel and calendar files are created on your device and saved by you. “Clear everything” wipes the memory instantly.`,
+      },
+      {
+        title: 'Uploads, cache and technical logs',
+        body: 'Your prescription is never sent to a server, not even for a moment: the site does not upload files. The document is not kept in the browser cache either, because it is opened straight from your device and not downloaded from the internet. There are no logs containing the prescription. Like any website, the hosting provider (Vercel) only records technical access data, such as IP address and page visited, which include nothing from your prescription.',
       },
       {
         title: 'Cookies and analytics',
