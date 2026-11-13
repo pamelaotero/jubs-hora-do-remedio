@@ -4,6 +4,11 @@ export const AUTHOR = {
   name: 'Pamela Otero',
 } as const;
 
+/** Contato para dúvidas (link do WhatsApp: só números, com 55 + DDD). */
+export const CONTACT = {
+  whatsappNumber: '5592993879214',
+} as const;
+
 /**
  * Apoio voluntário ao projeto. Deixe um campo vazio ('') para esconder a opção.
  * Pix: prefira uma chave ALEATÓRIA do seu banco em vez de celular/CPF (fica público no site).

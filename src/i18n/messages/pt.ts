@@ -48,6 +48,10 @@ export const pt = {
     privacy: 'Privacidade',
     noStorage: 'Não salvamos receitas nem dados de saúde',
     createdBy: 'Criado por',
+    helpTitle: 'Dúvidas?',
+    helpBody: 'Fale comigo pelo WhatsApp.',
+    helpCta: 'Chamar no WhatsApp',
+    helpMessage: 'Olá! Tenho uma dúvida sobre a Jubs.',
   },
 
   hero: {

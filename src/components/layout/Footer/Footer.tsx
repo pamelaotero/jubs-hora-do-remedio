@@ -1,6 +1,6 @@
-import { Heart, PawPrint } from 'lucide-react';
+import { Heart, MessageCircle, PawPrint } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { AUTHOR } from '@/constants/app';
+import { AUTHOR, CONTACT } from '@/constants/app';
 import { useI18n } from '@/hooks/useI18n';
 import styles from './Footer.module.css';
 
@@ -22,6 +22,20 @@ export function Footer() {
           <Link to={path('privacy')}>{t.footer.privacy}</Link>
           <span>{t.footer.noStorage}</span>
         </nav>
+        <section className={styles.help} aria-labelledby="footer-help-title">
+          <p>
+            <strong id="footer-help-title">{t.footer.helpTitle}</strong> {t.footer.helpBody}
+          </p>
+          <a
+            className={styles.helpLink}
+            href={`https://wa.me/${CONTACT.whatsappNumber}?text=${encodeURIComponent(t.footer.helpMessage)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <MessageCircle aria-hidden="true" />
+            {t.footer.helpCta}
+          </a>
+        </section>
         <p className={styles.credit}>
           {t.footer.createdBy} <strong>{AUTHOR.name}</strong>
         </p>

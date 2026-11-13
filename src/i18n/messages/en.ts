@@ -49,6 +49,10 @@ export const en: Messages = {
     privacy: 'Privacy',
     noStorage: 'We never store prescriptions or health data',
     createdBy: 'Created by',
+    helpTitle: 'Questions?',
+    helpBody: 'Talk to me on WhatsApp.',
+    helpCta: 'Message on WhatsApp',
+    helpMessage: 'Hi! I have a question about Jubs.',
   },
 
   hero: {
